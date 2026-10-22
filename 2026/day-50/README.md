@@ -20,15 +20,26 @@ This is where things get real.
 Before touching a terminal, write down from memory:
 
 1. Why was Kubernetes created? What problem does it solve that Docker alone cannot?
+   Answer - Docker is the engine. Kubernetes is the driver.
+     Docker is perfect for packaging an application and running it on a single machine. But at a massive production scale, you need an orchestrator.      Here is exactly what Kubernetes brings to the table :
+         Self-Healing
+         Auto-scaling
+         Load Balancing
+         Zero Downtime deployment
+   
 2. Who created Kubernetes and what was it inspired by?
+   Answer - Kubernetes was originally designed and created by Google in 2014, In 2015 donated to CNCF
+   
 3. What does the name "Kubernetes" mean?
-
-Do not look anything up yet. Write what you remember from the session, then verify against the official docs.
+   Answer - helmsman—the person who steers a ship. This nautical theme was chosen intentionally to complement Docker's shipping container metaphor
+   
 
 ---
 
 ### Task 2: Draw the Kubernetes Architecture
 From memory, draw or describe the Kubernetes architecture. Your diagram should include:
+
+
 
 **Control Plane (Master Node):**
 - API Server — the front door to the cluster, every command goes through it
