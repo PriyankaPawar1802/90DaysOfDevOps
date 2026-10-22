@@ -55,9 +55,25 @@ From memory, draw or describe the Kubernetes architecture. Your diagram should i
 After drawing, verify your understanding:
 - What happens when you run `kubectl apply -f pod.yaml`? Trace the request through each component.
 - What happens if the API server goes down?
+  
+     The existing applications continue to run without interruption, but you completely lose the ability to manage, update, or heal the cluster.
+Because the kube-apiserver acts as the sole communication hub for the entire Kubernetes environment, its failure causes a freeze in cluster orchestration:
+
+Existing Workloads Survive:
+
+Management & Updates Stop:
+
+Self-Healing is Suspended:
+
+etcd is Isolated: 
+
+Once the API server is brought back online, it immediately reads the desired state from etcd, reconciles it against the live state of the worker nodes, and resumes orchestration
+
+
 - What happens if a worker node goes down?
 
----
+**When a worker node crashes, loses power, or disconnects from the network, the applications running on that specific node go offline, but the Kubernetes control plane automatically detects the failure and self-heals the cluster by moving the workloads elsewhere.
+****---
 
 ### Task 3: Install kubectl
 `kubectl` is the CLI tool you will use to talk to your Kubernetes cluster.
