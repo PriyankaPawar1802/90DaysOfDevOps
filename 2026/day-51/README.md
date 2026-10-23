@@ -116,6 +116,12 @@ kubectl logs busybox-pod
 
 Notice the `command` field — BusyBox does not run a long-lived server like Nginx. Without a command that keeps it running, the container would exit immediately and the pod would go into `CrashLoopBackOff`.
 
+This happens because containers require an active foreground process to stay alive.
+
+The busybox image is just a lightweight Linux toolkit; it does not contain a web server or a continuous background daemon. When Kubernetes starts the pod, busybox boots up, realizes there is no ongoing task to run, and instantly exits successfully (Exit Code 0). Kubernetes sees the container stop, assumes it crashed, and automatically restarts it. This loop repeats infinitely.
+
+To fix this, you must give the container a continuous task to perform in your pod.yml file.
+
 **Verify:** Can you see "Hello from BusyBox" in the logs?
 
 ---
