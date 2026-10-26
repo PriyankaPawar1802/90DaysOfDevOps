@@ -42,3 +42,14 @@ Answer - Rolling Updates (Zero Downtime Deployments)
 When you update your Deployment (like changing the container image from v1 to v2), Kubernetes replaces your pods gradually to prevent downtime.The Process: It creates a new, secondary ReplicaSet. It spins up a new v2 pod, waits for it to become READY and accept traffic, and only then terminates an old v1 pod.The Result: It repeats this handoff one-by-one (or in small batches) until all old pods are replaced, ensuring the application stays online the entire time.Rollbacks (Reverting Bad Updates)
 If you deploy a broken image (like one that triggers a CrashLoopBackOff), Kubernetes retains the configuration of your previous ReplicaSets so you can instantly abort and revert.The Command: kubectl rollout undo deployment my-appThe Process: Kubernetes immediately stops the broken rollout, scales the new, failing ReplicaSet down to zero, and scales your previous, known-good ReplicaSet back up to full capacity.
 Screenshot of your Deployment and Pods running
+
+
+
+
+Question - What image version is running after the rollback?
+
+After a rollback, your pods are running the exact image version that was deployed immediately before the update.
+
+For example, if you updated your deployment from image nginx:v1 to nginx:v2 and it failed, executing a rollback instantly terminates the v2 pods and brings back pods running the nginx:v1 image.
+
+Kubernetes achieves this by simply scaling down the new, broken ReplicaSet and scaling your previous, known-good ReplicaSet (which still contains the v1 image configuration) back up to full capacity.
