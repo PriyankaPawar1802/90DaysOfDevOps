@@ -91,6 +91,10 @@ While a Service provides the stable "front door" IP, it relies entirely on its c
 When you create a Service with a selector (like app: web-app), Kubernetes automatically generates an Endpoints resource with the exact same name as the Service. It continuously monitors the cluster and instantly adds or removes Pod IPs as they crash, start up, or get deleted.
 
 commands -  
+```
 kubectl get endpoints web-app-clusterip
+
 kubectl describe endpoints web-app-clusterip
+
 kubectl describe service web-app-clusterip
+```
