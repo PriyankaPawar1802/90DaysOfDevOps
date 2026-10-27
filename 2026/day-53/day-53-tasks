@@ -23,7 +23,7 @@ This decoupled design is what makes Kubernetes so resilient. The Service doesn't
   
 Que - Your three Service manifests with an explanation of each type
   Ans - 
-  `apiVersion: v1
+  ``` apiVersion: v1
 kind: Service
 metadata:
   name: web-app-clusterip
@@ -34,12 +34,12 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-  `
+  ```
       How it works: This is the default Service type in Kubernetes. It creates a private, internal IP address (like the 10.96.221.155 you saw earlier) that is only reachable from inside the cluster.When to use it: Use this for backend systems that should never be exposed to the public internet, such as databases (MySQL, Redis) or internal microservices.
 
       NodePort
 
-apiVersion: v1
+``` apiVersion: v1
 kind: Service
 metadata:
   name: web-app-nodeport
@@ -51,12 +51,12 @@ spec:
   - port: 80
     targetPort: 80
     nodePort: 30080
-
+```
       How it works: A NodePort builds on top of a ClusterIP. In addition to the internal IP, it opens a specific, high-numbered port (between 30000-32767) directly on the underlying physical servers (the worker nodes). In the manifest above, anyone who accesses the IP address of your worker node on port 30080 will be routed to your Nginx pods.When to use it: It is primarily used for local testing (like your Docker kind setup) to quickly expose an app to your local web browser without needing a complex cloud load balancer.
 
   3. LoadBalancer (The Production Standard)
-
-        apiVersion: v1
+```
+apiVersion: v1
 kind: Service
 metadata:
   name: web-app-loadbalancer
@@ -67,7 +67,7 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-
+```
       How it works: A LoadBalancer builds on top of both a NodePort and a ClusterIP. When you apply this manifest, Kubernetes automatically sends an API request to your cloud provider (like AWS, Google Cloud, or Azure) instructing it to provision a physical, external load balancer. This external load balancer receives a public IP address and forwards internet traffic down into your cluster.When to use it: This is the standard way to expose a frontend web application to the public internet in a production cloud environment.
 
   
